@@ -35,10 +35,7 @@ function App() {
         max={25}
         value={przesuniecie}
         onChange={(e) => {
-          const wartosc = Number(e.target.value);
-          console.log(typeof wartosc)
-          console.log(wartosc)
-          setPrzesuniecie(wartosc);
+          setPrzesuniecie(Number(e.target.value));
         }} />
 
       <p>klucz: {przesuniecie}</p>
