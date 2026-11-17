@@ -1,30 +1,11 @@
 import { useState } from 'react';
-import './App.css'
-
-const alfabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-function szyfruj(znak, przesuniecie) {
-  // znajduje jego pozycję w alfabecie
-  const pozycja = alfabet.indexOf(znak);
-
-  // Znaki spoza alfabetu zwraca bez zmian
-  if (pozycja === -1) {
-    return znak;
-  }
-
-  // dodaje przesunięcie
-  // zawija wynik na początek alfabetu
-  const pozycjaPoPrzesunieciu = (pozycja + przesuniecie) % alfabet.length;
-
-  return alfabet[pozycjaPoPrzesunieciu];
-}
+import './App.css';
+import Okienko from './Okienko';
 
 function App() {
   const [tekst, setTekst] = useState('PIEROGI');
   const [przesuniecie, setPrzesuniecie] = useState(3);
   const [indexZaszyfrowanego, setIndexZaszyfrowanego] = useState(0); // 0 oznacza, że nic nie jest zaszyfrowane
-
-  const zaszyfrowanyTekst = tekst.split("", indexZaszyfrowanego).map((znak) => szyfruj(znak, przesuniecie)).join("");
 
   function szyfrujCalosc() {
     setIndexZaszyfrowanego(tekst.length);
@@ -57,7 +38,15 @@ function App() {
       <button onClick={() => szyfrujCalosc()}>Zaszyfruj całość</button>
       <button onClick={() => setIndexZaszyfrowanego(0)}>Wyczyść zaszyfrowany tekst</button>
 
-      <p>{zaszyfrowanyTekst}</p>
+      <p>
+        {tekst.split('').map(
+          (znak, i) => {
+            <Okienko key={i}
+              znak={znak}
+              czyZaszyfrowany={i < indexZaszyfrowanego}
+              przesuniecie={przesuniecie} />
+          })}
+      </p>
     </>
   )
 }
